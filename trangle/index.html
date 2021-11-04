@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css三角形</title>
+    <style>
+        .box {
+            display: flex;
+            margin-top: 30px;
+        }
+
+        .left {
+            width: 35%;
+        }
+
+        .radio {
+            position: relative;
+            display: inline-block;
+            margin-right: 12px;
+        }
+
+        .radio input {
+            display: none;
+            width: 15px;
+            height: 15px;
+            appearance: none;
+            /*清楚默认样式*/
+            -webkit-appearance: none;
+            opacity: 0;
+            outline: none;
+            z-index: 8;
+            /*让input层级高于label，使之能选中*/
+
+        }
+
+        .radio label {
+            margin-left: 20px;
+        }
+
+        .radio label::before {
+            content: " ";
+            position: absolute;
+            left: 0px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border: 1px solid #39f;
+            border-radius: 50%;
+        }
+
+        .radio input:checked+label::after {
+            content: "";
+            position: absolute;
+            left: 3px;
+            top: 8px;
+            /* 这里显示矩形的一半边框再旋转45度来实现对勾样式 */
+            width: 5px;
+            height: 12px;
+            width: 8px;
+            height: 8px;
+            background: #39f;
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+
+        .previewArea {
+            display: inline-block;
+            position: relative;
+            width: 360px;
+            height: 360px;
+            background: #eee;
+            background-image: linear-gradient(45deg, rgba(0, 0, 0, .2) 25%, transparent 0, transparent 75%, rgba(0, 0, 0, .2) 0),
+                linear-gradient(45deg, rgba(0, 0, 0, .2) 25%, transparent 0, transparent 75%, rgba(0, 0, 0, .2) 0);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+
+        .trangle {
+            display: inline-block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-style: solid;
+            border-color: transparent transparent #39f;
+            border-width: 15px 15px 15px 15px;
+
+        }
+
+        .code {
+            border: 1px solid #999;
+            background: #eee;
+            padding: 8px 15px;
+            line-height: 25px;
+        }
+
+        .code p {
+            margin: 0px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h3>在线三角形样式生成器</h3>
+    <div class="editArea">
+        <div class="direction-box">
+            方向:
+            <div class="radio">
+                <input type="radio" id="up" checked name="direction">
+                <label for="up">上</label>
+            </div>
+            <div class="radio">
+                <input type="radio" id="down" name="direction">
+                <label for="down">下</label>
+            </div>
+            <div class="radio">
+                <input type="radio" id="left" name="direction">
+                <label for="left">左</label>
+            </div>
+            <div class="radio">
+                <input type="radio" id="right" name="direction">
+                <label for="right">右</label>
+            </div>
+        </div>
+        <div class="width-box">
+            <span>
+                宽度: <input type="range" class="width-input" value="15">
+            </span>
+            <span>
+                高度: <input type="range" class="height-input" value="15">
+            </span>
+        </div>
+        <div class="color-box">
+            <input value="#3399FFFF" class="color" data-jscolor="{}">
+        </div>
+    </div>
+    <div class="box">
+        <div class="left">
+            <div class="previewArea">
+                <span class="trangle"></span>
+            </div>
+        </div>
+        <div class="right">
+            <div class="code">
+                display: inline-block;<br />
+                border-style: solid;<br />
+                <p class="border-color">border-color: transparent transparent #39f;</p>
+                <p class="border-width">border-width: 0 15px 15px 15px;</p>
+
+            </div>
+        </div>
+    </div>
+    <script src="jscolor.js"></script>
+    <script>
+        // var opt = {
+        //     a: 'aa',
+        // }
+        // var options = {
+        //     a: 'a',
+        //     b: 'b',
+        //     c: 'c',
+        //     d: 'd'
+        // }
+
+        // let s = extend(opt, options);
+        // console.log(s)
+
+        // function extend(o, n, override) {
+        //     for (var key in n) {
+        //         if (n.hasOwnProperty(key) && (!o.hasOwnProperty(key) || override)) {
+        //             o[key] = n[key];
+        //         }
+        //     }
+        //     return o;
+        // }
+
+        let radios = document.getElementsByName('direction');
+        let cc = document.querySelector('.trangle');
+
+        document.body.addEventListener('click', function (e) {
+            
+            let current = e.target;
+            if (current.nodeName.toLowerCase() == 'input') {
+                let colors = document.querySelector('.color').getAttribute('data-current-color');
+                let borderColor = document.querySelector('.border-color');
+                let idNames = current.id;
+                switch (idNames) {
+                    case 'up':
+                        cc.style.borderColor = 'transparent transparent '+ colors;
+                        borderColor.innerHTML = 'border-color:transparent transparent '+ colors;
+                        break;
+
+                    case 'down':
+                        cc.style.borderColor = colors +' transparent transparent';
+                        borderColor.innerHTML = 'border-color:'+ colors +' transparent transparent';
+                        break;
+
+                    case 'left':
+                        cc.style.borderColor = 'transparent '+ colors +' transparent  transparent';
+                        borderColor.innerHTML = 'border-color:transparent '+ colors +' transparent  transparent';
+                        break;
+
+                    case 'right':
+                        cc.style.borderColor = 'transparent transparent transparent '+ colors;
+                        borderColor.innerHTML = 'border-color:transparent transparent transparent '+ colors;
+                        break;
+
+                    default:
+                        break;
+                }
+                changeWH(idNames)
+            }
+        })
+
+        document.querySelector('.width-input').addEventListener('change', function () {
+            changeWH();
+        })
+
+        document.querySelector('.height-input').addEventListener('change', function () {
+            changeWH();
+        })
+
+        document.querySelector('.color').addEventListener('change',function(){
+            var evt = document.createEvent('HTMLEvents')
+            evt.initEvent('click', true, true);
+            evt.color = this.value;
+            document.querySelector('.radio').querySelector('input').dispatchEvent(evt);
+        })
+
+        function changeWH(direction) {
+            if (!direction) {
+                for (let i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        direction = radios[i].id
+                    }
+                }
+            }
+
+            let width = document.querySelector('.width-input').value,
+                height = document.querySelector('.height-input').value,
+                widthValue = width == '' ? 15 : width,
+                heightValue = height == '' ? 15 : height;
+            let borderWidth = document.querySelector('.border-width');
+            switch (direction) {
+                case 'up':
+                    cc.style.borderWidth = '0 ' + widthValue + 'px ' + heightValue + 'px ' + widthValue + 'px';
+                    borderWidth.innerHTML = '0 ' + widthValue + 'px ' + heightValue + 'px ' + widthValue + 'px';
+                    break;
+
+                case 'down':
+                    cc.style.borderWidth = heightValue + 'px ' + widthValue + 'px 0 ' + widthValue + 'px';
+                    borderWidth.innerHTML = heightValue + 'px ' + widthValue + 'px 0 ' + widthValue + 'px';
+                    break;
+
+                case 'left':
+                    cc.style.borderWidth = widthValue + 'px ' + heightValue + 'px ' + widthValue + 'px 0';
+                    borderWidth.innerHTML = widthValue + 'px ' + heightValue + 'px ' + widthValue + 'px 0';
+                    break;
+
+                case 'right':
+                    cc.style.borderWidth = widthValue + 'px 0 ' + widthValue + 'px ' + heightValue + 'px';
+                    borderWidth.innerHTML = widthValue + 'px 0 ' + widthValue + 'px ' + heightValue + 'px';
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>

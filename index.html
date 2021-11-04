@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .radio {
+    position: relative;
+    display: inline-block;
+    margin-right: 12px;
+}
+ 
+.radio input {
+    display: none;
+    width: 15px;
+    height: 15px;
+    appearance: none;/*清楚默认样式*/
+    -webkit-appearance: none;
+    opacity: 0;
+    outline: none;
+    z-index: 8; /*让input层级高于label，使之能选中*/
+     
+}
+ 
+.radio label {
+margin-left: 20px;
+}
+.radio label::before{
+    content: " ";
+    position: absolute;
+    left: 0px;
+    top:5px;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #39f;
+}
+.radio input:checked+label::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 3px;
+    /* 这里显示矩形的一半边框再旋转45度来实现对勾样式 */
+    width: 5px;
+    height: 12px;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    transform: rotate(45deg);
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="radio">
+        <input type="checkbox" name="sex" id="sex1">
+        <label for="sex1">男</label>
+        
+    </div>
+    <div class="radio">
+        <input type="checkbox" name="sex" id="sex2">
+        <label for="sex2">女</label> 
+    </div>
+    <script>
+    // let promise = new Promise(function(resolve, reject) {
+    //     setTimeout(() => {
+    //         resolve('Promise');
+    //     }, 2000);
+        
+    // });
+
+    // promise.then(function(res) {
+    //     console.log(res)
+    //     console.log('resolved.');
+    // });
+
+    // async function promise(){
+    //     new Promise((resolve, reject)=>{
+    //         resolve()
+    //     })
+    // }
+
+    
+
+    // var addTwoNumbers = function(l1, l2) {
+    //     let new1 = l1.reverse().join("");
+    //     let new2 = l2.reverse().join("");
+    //     return (parseInt(new1)+ parseInt(new2))
+    // }
+    // console.log(addTwoNumbers([2,4,3],[5,6,4]));
+
+    </script>
+</body>
+
+</html>
